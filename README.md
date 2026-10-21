@@ -2,6 +2,7 @@
 
 Cursor / agent skill for implementing UI micro-interactions in code (CSS, Tailwind, Framer Motion) with a shared `mi-*` class kit.
 
+<!-- Badge populates after skills.sh indexes install telemetry (not instantly). Until then skills.sh/b/... may show "resource not found". -->
 [![skills.sh](https://skills.sh/b/HarrySmith852/frontend-micro-interactions)](https://skills.sh/HarrySmith852/frontend-micro-interactions)
 
 ## Install ([skills.sh](https://www.skills.sh/))
@@ -9,6 +10,13 @@ Cursor / agent skill for implementing UI micro-interactions in code (CSS, Tailwi
 ```bash
 npx skills add HarrySmith852/frontend-micro-interactions
 ```
+
+There is **no submit form** on skills.sh. The leaderboard/badge appear after real `npx skills add` installs are counted (anonymous CLI telemetry). `--list` alone does not list you.
+
+Expected pages (after indexing):
+
+- https://skills.sh/HarrySmith852/frontend-micro-interactions
+- Badge: https://skills.sh/b/HarrySmith852/frontend-micro-interactions
 
 List without installing:
 

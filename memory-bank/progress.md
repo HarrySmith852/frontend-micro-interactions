@@ -1,14 +1,15 @@
 # Progress
 
 ## What works
-- Project skill with CSS / Tailwind / Motion ladder
-- References including Tailwind + shared `mi-*` class kit
+- Project skill with CSS / Tailwind / Motion ladder + shared `mi-*` kit
 - Research report + notes
-- Private GitHub repo on `main` (earlier commit; local skill updates unpushed)
+- Public GitHub repo; skills CLI discovers skill
+- README + MIT; install path for skills.sh
 
 ## What's left
-- Commit/push pending skill, knowledge, memory-bank changes
+- skills.sh leaderboard page after install telemetry accumulates
 - No product UI app in repo yet
+- Optional commit of latest memory-bank/knowledge edits
 
 ## Known issues
 - None

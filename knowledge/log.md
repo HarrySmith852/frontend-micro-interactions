@@ -8,3 +8,5 @@
 - 2026-10-21 — Added Tailwind micro-interaction reference + SKILL.md ladder/recipes.
 - 2026-10-21 — Shared `mi-*` class kit rule (same interaction → same class).
 - 2026-10-21 — Concept `ops/shared-mi-classes.md` for canonical mi-* kit decision.
+- 2026-10-21 — Repo made public for skills.sh; install via `npx skills add HarrySmith852/frontend-micro-interactions`.
+- 2026-10-21 — Concept `ops/skills-sh-listing.md` (telemetry listing, no submit form).

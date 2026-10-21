@@ -14,4 +14,4 @@ timestamp: 2026-10-21T18:36:00Z
 
 ## Summary
 
-Private repo `HarrySmith852/frontend-micro-interactions` on GitHub. Default branch `main`. Created with `gh` and pushed as initial commit.
+Public repo `HarrySmith852/frontend-micro-interactions` on GitHub (was private; opened for [skills.sh](https://www.skills.sh/) discoverability). Default branch `main`. Install: `npx skills add HarrySmith852/frontend-micro-interactions`.
