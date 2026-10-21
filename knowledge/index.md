@@ -3,4 +3,5 @@
 ## Domains
 
 - [Micro-interactions](./micro-interactions/index.md)
-- [Ops](./ops/github-remote.md)
+- [Ops — GitHub remote](./ops/github-remote.md)
+- [Ops — Skill references](./ops/skill-references.md)

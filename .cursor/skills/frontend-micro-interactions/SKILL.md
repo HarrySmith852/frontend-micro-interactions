@@ -1,22 +1,22 @@
 ---
 name: frontend-micro-interactions
-description: Use when implementing UI micro-interactions in code — hover/press feedback, toggles, likes/favorites, form validation motion, loading/success states, toasts, or when the user asks to add polish, delight, or Framer Motion / CSS animation to a control.
+description: Use when implementing UI micro-interactions in code — hover/press feedback, toggles, likes/favorites, form validation motion, loading/success states, toasts, Tailwind transition/animate utilities, or when the user asks to add polish, delight, Framer Motion, or CSS animation to a control.
 disable-model-invocation: true
 ---
 
 # Frontend Micro-Interactions
 
-Implement small, purposeful feedback in code. Prefer **CSS transitions / `@keyframes`**; use **Framer Motion (Motion)** only when CSS cannot express the interaction cleanly.
+Implement small, purposeful feedback in code. Prefer **CSS transitions / `@keyframes`**, or **Tailwind** utilities when the project already uses Tailwind; use **Framer Motion (Motion)** only when CSS/Tailwind cannot express the interaction cleanly.
 
 ## Stack ladder (required)
 
 | Need | Use |
 |------|-----|
-| Hover, focus, press scale/opacity, color, simple enter/exit | CSS `transition` or short `@keyframes` |
+| Hover, focus, press scale/opacity, color, simple enter/exit | CSS `transition` / `@keyframes`, **or Tailwind** `transition-*` / `motion-safe:` variants |
 | Gesture-driven springs, layout animation, interruptible multi-step sequences, shared layout | Framer Motion / Motion |
 | Timeline orchestration across many elements, canvas, complex scrubbing | Out of scope for this skill — do not reach for GSAP for a single control |
 
-**Default:** CSS. Justify Motion in one sentence if you use it.
+**Default:** CSS or Tailwind (match the repo). Justify Motion in one sentence if you use it.
 
 ## Decision recipe
 
@@ -73,7 +73,7 @@ Expose state to AT: `aria-pressed`, `aria-invalid`, `role="alert"` for errors.
 - Durations >400ms on frequent controls
 - Animate layout properties (`top`, `width`, `height`) when transform works
 
-## CSS pattern (preferred)
+## CSS pattern (plain CSS)
 
 ```tsx
 <button
@@ -101,6 +101,23 @@ Expose state to AT: `aria-pressed`, `aria-invalid`, `role="alert"` for errors.
 }
 ```
 
+## Tailwind pattern (when the project uses Tailwind)
+
+Prefer named transition properties — never `transition-all`. Use `active:` for press (touch-safe); gate motion with `motion-safe:` / `motion-reduce:`.
+
+```tsx
+<button
+  type="button"
+  aria-pressed={on}
+  onClick={() => setOn((v) => !v)}
+  className="motion-safe:transition-transform motion-safe:duration-150 motion-safe:ease-out motion-safe:hover:scale-[1.04] motion-safe:active:scale-[0.97]"
+>
+  {/* icon */}
+</button>
+```
+
+More recipes (toggle, shake, toast, spinner): [Tailwind interactions](references/tailwind.md).
+
 ## Motion pattern (when justified)
 
 Use when you need interruptible press springs or sequenced favorited pop that CSS would turn into brittle timers:
@@ -120,20 +137,31 @@ Keep Motion props minimal. Do not mix a CSS celebration keyframe *and* a Motion 
 
 ## Common cases
 
-| Case | Approach |
-|------|----------|
-| Button press | CSS `:active` scale |
-| Toggle / switch | CSS transition on thumb `transform` |
-| Favorite / like | CSS keyframe scale pulse on toggle; Motion only if burst must cancel mid-flight |
-| Invalid field | Short CSS shake (≤400ms) + `aria-invalid`; **disabled** under reduced motion |
-| Success check | Opacity + scale 150–250ms CSS |
-| Toast enter/exit | Opacity + `translateY`; CSS unless stacking/layout needs Motion |
+| Case | CSS | Tailwind |
+|------|-----|----------|
+| Button press | `:active` scale | `motion-safe:active:scale-[0.97]` + `transition-transform` |
+| Toggle / switch | thumb `transform` | `translate-x-*` + `transition-transform` |
+| Favorite / like | keyframe scale pulse | short `animate-[…]` or class + keyframes; Motion only if must cancel mid-flight |
+| Invalid field | shake ≤400ms + `aria-invalid` | `motion-safe:animate-[mi-shake_…]`; never without motion gate |
+| Success check | opacity + scale 150–250ms | `transition-opacity` + `scale-*` |
+| Toast enter/exit | opacity + `translateY` | `transition-transform` + `transition-opacity` |
 
 ## Baseline failures this skill prevents
 
 | Failure | Fix |
 |---------|-----|
-| Framer for simple hover/press | CSS ladder first |
-| Shake with no reduced-motion | Always gate translate/shake |
+| Framer for simple hover/press | CSS / Tailwind ladder first |
+| Shake with no reduced-motion | Always gate translate/shake (`motion-safe:` / media query) |
 | Glow + particle "premium" defaults | Subtle scale/opacity only |
 | Overshoot easing for form chrome | Linear/standard ease unless playful brand |
+| `transition-all` in Tailwind | Use `transition-transform` / `transition-opacity` / `transition-colors` |
+
+## Additional resources
+
+Read only what the task needs (one level deep):
+
+- [Principles & ROI](references/principles.md) — Saffer/NN/g model, ship order, frequency gate
+- [Timing, a11y, performance](references/timing-a11y.md) — durations, easing, reduced-motion, compositor rules
+- [High-ROI patterns](references/patterns.md) — button, wait, toggle, form, toast, drag
+- [Tailwind interactions](references/tailwind.md) — utilities, `motion-safe:`, recipes
+- [Sources](references/sources.md) — NN/g, Material, WCAG, Emil Kowalski, project report
