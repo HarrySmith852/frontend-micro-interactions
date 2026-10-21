@@ -6,3 +6,5 @@
 - 2026-10-21 — Skill gained `references/` (principles, timing-a11y, patterns, sources).
 - 2026-10-21 — Concept `ops/skill-references.md` for skill progressive-disclosure layout.
 - 2026-10-21 — Added Tailwind micro-interaction reference + SKILL.md ladder/recipes.
+- 2026-10-21 — Shared `mi-*` class kit rule (same interaction → same class).
+- 2026-10-21 — Concept `ops/shared-mi-classes.md` for canonical mi-* kit decision.

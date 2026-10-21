@@ -18,6 +18,16 @@ Implement small, purposeful feedback in code. Prefer **CSS transitions / `@keyfr
 
 **Default:** CSS or Tailwind (match the repo). Justify Motion in one sentence if you use it.
 
+## Shared classes (required)
+
+**Same interaction → same class name everywhere.** Do not invent a new utility stack per control.
+
+1. If a kit class exists for that interaction → **reuse it**
+2. If the same feel appears a second time → **promote** inline utilities into one named `mi-*` class
+3. Keep canonical names: `mi-press`, `mi-hover-lift`, `mi-colors`, `mi-fade`, `mi-pop`, `mi-shake`, `mi-toast`, `mi-spin`, `mi-toggle-thumb`, `mi-check` + state `is-on` / `is-open` / `is-invalid` / `is-celebrating` / `is-success`
+
+Full kit (plain CSS + Tailwind `@apply`): [Shared classes](references/shared-classes.md).
+
 ## Decision recipe
 
 Before coding, fill this (keep it short; do not invent a design doc):
@@ -26,6 +36,7 @@ Before coding, fill this (keep it short; do not invent a design doc):
 2. **Feedback** — what changes (scale, opacity, color, position)
 3. **Duration** — pick from the table below
 4. **Reduced motion** — instant state or opacity-only substitute
+5. **Class** — reuse existing `mi-*` kit class, or add one named class then use it
 
 Then implement with the stack ladder.
 
@@ -64,59 +75,36 @@ Expose state to AT: `aria-pressed`, `aria-invalid`, `role="alert"` for errors.
 
 **Do**
 - One job per interaction (feedback for that control only)
+- Reuse the same `mi-*` class for the same interaction across the app
 - Match existing tokens/easings in the repo if present
 - Keep celebration subtle (scale pulse or short opacity burst)
 
 **Don't**
 - Default to Framer Motion for hover/press alone
+- Duplicate long Tailwind strings for the same press/shake/toast feel on each component
+- Rename the same interaction (`btn-press`, `press-fx`, …) — stick to the kit names
 - Particle bursts, spark rings, radial glow halos, or multi-layer shadows for stock polish — celebration = icon scale/opacity pulse only
 - Durations >400ms on frequent controls
 - Animate layout properties (`top`, `width`, `height`) when transform works
 
-## CSS pattern (plain CSS)
+## CSS / Tailwind pattern (use kit classes)
+
+Define the kit once ([shared-classes.md](references/shared-classes.md)), then compose the same classes on every matching control:
 
 ```tsx
-<button
-  type="button"
-  className="mi-btn"
-  aria-pressed={on}
-  onClick={() => setOn((v) => !v)}
->
+<button type="button" className="mi-press mi-colors" aria-pressed={on} onClick={() => setOn((v) => !v)}>
   {/* icon */}
 </button>
+
+<button type="button" className="mi-press mi-hover-lift">Favorite</button>
+
+<input
+  aria-invalid={invalid}
+  className={["mi-colors", "mi-shake", invalid ? "is-invalid" : ""].filter(Boolean).join(" ")}
+/>
 ```
 
-```css
-.mi-btn {
-  transition: transform 120ms cubic-bezier(0.2, 0, 0, 1),
-    opacity 120ms cubic-bezier(0.2, 0, 0, 1);
-}
-.mi-btn:hover { transform: scale(1.04); }
-.mi-btn:active { transform: scale(0.96); }
-
-@media (prefers-reduced-motion: reduce) {
-  .mi-btn { transition: none; }
-  .mi-btn:hover,
-  .mi-btn:active { transform: none; }
-}
-```
-
-## Tailwind pattern (when the project uses Tailwind)
-
-Prefer named transition properties — never `transition-all`. Use `active:` for press (touch-safe); gate motion with `motion-safe:` / `motion-reduce:`.
-
-```tsx
-<button
-  type="button"
-  aria-pressed={on}
-  onClick={() => setOn((v) => !v)}
-  className="motion-safe:transition-transform motion-safe:duration-150 motion-safe:ease-out motion-safe:hover:scale-[1.04] motion-safe:active:scale-[0.97]"
->
-  {/* icon */}
-</button>
-```
-
-More recipes (toggle, shake, toast, spinner): [Tailwind interactions](references/tailwind.md).
+Do **not** paste long `motion-safe:transition-transform…` strings on each instance — put those inside `mi-press` / `@apply` once. Utility details: [Tailwind interactions](references/tailwind.md).
 
 ## Motion pattern (when justified)
 
@@ -155,11 +143,13 @@ Keep Motion props minimal. Do not mix a CSS celebration keyframe *and* a Motion 
 | Glow + particle "premium" defaults | Subtle scale/opacity only |
 | Overshoot easing for form chrome | Linear/standard ease unless playful brand |
 | `transition-all` in Tailwind | Use `transition-transform` / `transition-opacity` / `transition-colors` |
+| New utility soup per button | Reuse / extend the shared `mi-*` kit |
 
 ## Additional resources
 
 Read only what the task needs (one level deep):
 
+- [Shared classes](references/shared-classes.md) — same interaction → same `mi-*` class (CSS + Tailwind `@apply`)
 - [Principles & ROI](references/principles.md) — Saffer/NN/g model, ship order, frequency gate
 - [Timing, a11y, performance](references/timing-a11y.md) — durations, easing, reduced-motion, compositor rules
 - [High-ROI patterns](references/patterns.md) — button, wait, toggle, form, toast, drag

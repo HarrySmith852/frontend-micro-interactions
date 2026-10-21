@@ -20,4 +20,5 @@ The project skill at `.cursor/skills/frontend-micro-interactions/` keeps impleme
 - `timing-a11y.md` — durations, easing, reduced-motion, performance
 - `patterns.md` — control patterns and anti-patterns
 - `tailwind.md` — Tailwind utilities, `motion-safe:`, recipes
+- `shared-classes.md` — same interaction → same `mi-*` class kit
 - `sources.md` — curated external links + project report path

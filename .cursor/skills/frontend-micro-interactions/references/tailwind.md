@@ -2,6 +2,8 @@
 
 Load when the project already uses Tailwind. Same stack ladder: utilities first, Motion only when utilities cannot.
 
+**Prefer shared `mi-*` classes** ([shared-classes.md](shared-classes.md)) over repeating long utility strings. Use the recipes below to **define** the kit once with `@apply`, then consume `mi-press`, `mi-shake`, etc. in components.
+
 ## Utility map
 
 | Need | Prefer | Avoid |

@@ -1,14 +1,13 @@
 # Progress
 
 ## What works
-- Project skill `frontend-micro-interactions` exists and was RED/GREEN tested
-- Skill references under `.cursor/skills/frontend-micro-interactions/references/` (includes Tailwind)
-
-- Research report + three note files on micro-interaction best practices
-- Private GitHub repo `HarrySmith852/frontend-micro-interactions` on `main`
+- Project skill with CSS / Tailwind / Motion ladder
+- References including Tailwind + shared `mi-*` class kit
+- Research report + notes
+- Private GitHub repo on `main` (earlier commit; local skill updates unpushed)
 
 ## What's left
-- Commit/push pending local changes (references + memory-bank)
+- Commit/push pending skill, knowledge, memory-bank changes
 - No product UI app in repo yet
 
 ## Known issues
